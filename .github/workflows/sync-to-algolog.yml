@@ -17,7 +17,7 @@ jobs:
           path: algolog-repo
       - name: 파일 복사
         run: |
-          rsync -av --exclude='.git' --exclude='.github' --exclude='README.md' ./ algolog-repo/민지/
+          rsync -av --exclude='.git' --exclude='.github' --exclude='README.md' --exclude='algolog-repo' ./ algolog-repo/민지/
       - name: algolog 레포에 push
         run: |
           cd algolog-repo
