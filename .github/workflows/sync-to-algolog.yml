@@ -9,23 +9,15 @@ jobs:
     steps:
       - name: 개인 레포 체크아웃
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
       - name: algolog 레포 체크아웃
         uses: actions/checkout@v3
         with:
           repository: Minji6/algolog
           token: ${{ secrets.ALGOLOG_TOKEN }}
           path: algolog-repo
-      - name: 변경된 파일 복사
+      - name: 파일 복사
         run: |
-          git config core.quotepath false
-          git show --name-only --format="" HEAD | while read file; do
-            if [ -f "$file" ] && [[ "$file" != .github/* ]]; then
-              mkdir -p "algolog-repo/민지/$(dirname "$file")"
-              cp "$file" "algolog-repo/민지/$file"
-            fi
-          done
+          rsync -av --exclude='.git' --exclude='.github' --exclude='README.md' ./ algolog-repo/민지/
       - name: algolog 레포에 push
         run: |
           cd algolog-repo
