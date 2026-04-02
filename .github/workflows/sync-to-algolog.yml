@@ -19,9 +19,10 @@ jobs:
           path: algolog-repo
       - name: 변경된 파일 복사
         run: |
+          git config core.quotepath false
           git show --name-only --format="" HEAD | while read file; do
             if [ -f "$file" ] && [[ "$file" != .github/* ]]; then
-              mkdir -p "algolog-repo/민지/$(dirname $file)"
+              mkdir -p "algolog-repo/민지/$(dirname "$file")"
               cp "$file" "algolog-repo/민지/$file"
             fi
           done
