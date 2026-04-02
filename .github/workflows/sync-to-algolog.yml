@@ -1,0 +1,41 @@
+name: Sync to algolog
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 개인 레포 체크아웃
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2  # 변경된 파일 감지를 위해
+
+      - name: algolog 레포 체크아웃
+        uses: actions/checkout@v3
+        with:
+          repository: Minji6/algolog
+          token: ${{ secrets.ALGOLOG_TOKEN }}
+          path: algolog-repo
+
+      - name: 변경된 파일 복사
+        run: |
+          # 이번 커밋에서 추가/수정된 파일만 가져오기
+          git diff --name-only HEAD~1 HEAD -- | while read file; do
+            if [ -f "$file" ]; then
+              mkdir -p "algolog-repo/민지/$(dirname $file)"
+              cp "$file" "algolog-repo/민지/$file"
+            fi
+          done
+
+      - name: algolog 레포에 push
+        run: |
+          cd algolog-repo
+          git config user.name "Minji6"
+          git config user.email "pullzee6@gmail.com"
+          git add .
+          git diff --cached --quiet || git commit -m "sync: $(git -C $GITHUB_WORKSPACE log --format=%s -1 HEAD)"
+          git push
