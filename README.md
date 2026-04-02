@@ -1,5 +1,3 @@
----
-
 # 🧩 개인 알고리즘 풀이 저장소
 
 백준 & 프로그래머스 문제 풀이 개인 저장소입니다.
@@ -74,5 +72,3 @@ jobs:
           git diff --cached --quiet || git commit -m "sync: $(git -C $GITHUB_WORKSPACE log --format=%s -1 HEAD)"
           git push
 ```
-
----
