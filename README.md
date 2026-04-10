@@ -35,7 +35,7 @@
 - Name: `{토큰이름}`
 - Value: 발급받은 토큰
 
-### 4. 스터디 레포 Actions 권한 설정
+### 4. 스터디 레포 Actions 권한 설정 (팀원 분들은 스킵!)
 스터디 레포 `Settings` → `Actions` → `General` → `Workflow permissions`
 - `Read and write permissions` 선택
 
