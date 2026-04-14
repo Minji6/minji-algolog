@@ -1,43 +1,28 @@
-from collections import Counter
-
 def solution(a, b, c, d):
-    cnt = Counter([a,b,c,d])
-    counts = list(cnt.values())
-    counts.sort(reverse=True)
-    p = None
-    q = None
+    nums = [a, b, c, d]
+    counts = []
     
-    if counts == [4]:
-        p = list(cnt.keys())[0]
-        answer = 1111 * p
-        
-    elif counts == [3,1]:
-        for key, value in cnt.items():
-            if value == 3:
-                p = key
-            if value == 1:
-                q = key
-        answer = (10 * p + q) ** 2
+    for i in nums:
+        count = nums.count(i)
+        counts.append(count)
     
-    elif counts == [2,2]:
-        for key, value in cnt.items():
-            if value == 2 and p == None:
-                p = key
-            elif value == 2:
-                q = key
-        answer = (p+q) * abs(p-q)
-
-    elif counts == [2,1,1]:
-        for key, value in cnt.items():
-            if value == 2 and p == None:
-                p = key
-            elif value == 1 and q == None:
-                q = key
-            elif value == 1:
-                r = key
-        answer = q * r
-                
-    else: answer = min(a,b,c,d)
+    if max(counts) == 4:
+        return a * 1111
     
-        
-    return answer
+    elif max(counts) == 3:
+        p = nums[counts.index(3)]
+        q = nums[counts.index(1)]
+        return (10 * p + q) ** 2
+    
+    elif max(counts) == 2:
+        if min(counts) == 2:
+            if a == b:
+                return (a + c) * abs(a - c)
+            else:
+                return (a + b) * abs(a - b)
+        else:
+            p = nums[counts.index(2)]
+            return (a * b * c * d) / (p ** 2)
+    
+    else:
+        return min(nums)
